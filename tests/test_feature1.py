@@ -45,7 +45,7 @@ def test_update_item():
 
 #@pytest.mark.skip
 def test_delete_item():
-    r = requests.delete(url=config.SERVICE_URL+'delete?item_id='+ValueStorage.created_item_id, headers=ValueStorage.xsrf, json=ValueStorage.valid_item_object,cookies=ValueStorage.xsrf)
+    r = requests.delete(url=config.SERVICE_URL+'delete?item_id='+ValueStorage.created_item_id, headers=ValueStorage.xsrf,cookies=ValueStorage.xsrf)
     Response(r).assert_status_code(200)
 
 
