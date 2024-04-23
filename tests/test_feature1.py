@@ -31,6 +31,7 @@ def test_get_all():
 def test_create_item():
     r=requests.post(url=config.SERVICE_URL+'create',headers=ValueStorage.xsrf,json =ValueStorage.valid_item_object,cookies=ValueStorage.xsrf)
     ValueStorage.created_item_id = r.json()
+    ValueStorage.valid_item_object['pk'] = r.json()
     Response(r).assert_status_code(200)
 
 #@pytest.mark.skip
@@ -39,13 +40,13 @@ def test_get_item():
     Response(r).assert_status_code(200).validate(Payload).validate_created_item(ValueStorage)
 #@pytest.mark.skip
 def test_update_item():
-    ValueStorage.valid_item_object['sk'] = 'Testing sk updated'
+    ValueStorage.valid_item_object['title'] = 'different title'
     r = requests.put(url=config.SERVICE_URL+'update', headers=ValueStorage.xsrf, json=ValueStorage.valid_item_object,cookies=ValueStorage.xsrf)
     Response(r).assert_status_code(200)
 
 #@pytest.mark.skip
 def test_delete_item():
-    r = requests.delete(url=config.SERVICE_URL+'delete?item_id='+ValueStorage.created_item_id, headers=ValueStorage.xsrf,cookies=ValueStorage.xsrf)
+    r = requests.delete(url=config.SERVICE_URL+'delete?item_pk=' + ValueStorage.created_item_id +'&item_sk='+ ValueStorage.valid_item_object['sk'], headers=ValueStorage.xsrf,cookies=ValueStorage.xsrf)
     Response(r).assert_status_code(200)
 
 
