@@ -2,7 +2,8 @@ from faker import Faker
 from uuid import uuid4
 from src.baseclasses.builder import BuilderBaseClass
 
-thefaker = Faker()
+fake = Faker()
+
 
 class ApiObjectBuilder(BuilderBaseClass):
     def update_key(self, key):
@@ -24,16 +25,15 @@ class ApiObjectBuilder(BuilderBaseClass):
 
     @classmethod
     def generate_title(cls):
-        return Faker().paragraph(nb_sentences=2)
+        return fake.paragraph(nb_sentences=2)
 
     @classmethod
     def generate_author(cls):
-        return Faker().name()
+        return fake.name()
 
     @classmethod
     def generate_description(cls):
-        return Faker().text(max_nb_chars = 300)
-
+        return fake.text(max_nb_chars=300)
 
     @classmethod
     def build(cls):
@@ -42,9 +42,9 @@ class ApiObjectBuilder(BuilderBaseClass):
         title = cls.generate_title()
         author = cls.generate_author()
         description = cls.generate_description()
-        var1=Faker().isbn10()
-        var2=str(Faker().isbn10())
-        var3=Faker().pyfloat()
+        var1 = fake.isbn10()
+        var2 = fake.isbn10()
+        var3 = fake.pyfloat()
         params = [
      {
        "var1": var1,

@@ -3,19 +3,20 @@ from pydantic import BaseModel, AfterValidator, Field
 from typing import Annotated, List
 from decimal import Decimal
 
+
 class ParamsModel(BaseModel):
-    var1:str
-    var2:str
+    var1: str
+    var2: str
     var3: Decimal = Field()
 
 
 class Payload(BaseModel):
     sk: str
-    description:str
-    pk: uuid4 | Annotated[str,AfterValidator(lambda x:uuid4())]
-    title:str
-    author:str
-    params:List[ParamsModel]
+    description: str
+    pk: uuid4 | Annotated[str, AfterValidator(lambda x:uuid4())]
+    title: str
+    author: str
+    params: List[ParamsModel]
 
 
 

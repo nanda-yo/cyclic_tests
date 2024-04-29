@@ -7,9 +7,11 @@ from src.generators.api_object import ApiObjectBuilder
 def update_item(key):
     return ApiObjectBuilder().update_key(key)
 
+
 @pytest.fixture(scope='session')
-def ValueStorage():
+def valuestorage():
     yield __ValueStorage
+
 
 class __ValueStorage:
     xsrf = {}
