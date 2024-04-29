@@ -1,5 +1,5 @@
 from uuid import uuid4
-from pydantic import BaseModel, validator, AfterValidator, Field
+from pydantic import BaseModel, AfterValidator, Field
 from typing import Annotated, List
 from decimal import Decimal
 
