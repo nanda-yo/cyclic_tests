@@ -13,4 +13,5 @@ to extract allure resources
 
     docker cp $(docker ps -a -q | head -1):/usr/tests/alluredir .
 then
+
     allure serve alluredir  
