@@ -6,7 +6,7 @@ WORKDIR ./usr/tests
 
 VOLUME /alluredir
 
-RUN apk update && apk upgrade && apk add bash
+RUN apk update && apk add --no-cache bash
 
 COPY requirements.txt .
 
