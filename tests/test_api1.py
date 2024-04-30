@@ -1,11 +1,12 @@
 import pytest
 import requests
 import config
+from allure import severity,severity_level
 from src.schemas.payload import Payload
 from src.baseclasses.response import Response
 from uuid import uuid4
 
-
+@severity(severity_level.BLOCKER)
 @pytest.mark.smoke
 def test_can_call_endpoint(valuestorage):
     """
@@ -16,6 +17,7 @@ def test_can_call_endpoint(valuestorage):
     assert r.status_code == 200
 
 
+@severity(severity_level.NORMAL)
 def test_xsrf_required(valuestorage):
     """
     Tests if server returns non 2** for payload missing csrf token
@@ -24,6 +26,7 @@ def test_xsrf_required(valuestorage):
     assert r.status_code == 403
 
 
+@severity(severity_level.NORMAL)
 @pytest.mark.skip(reason='[ISSUE] double token check doesnt work yet for opendocs compatibility')
 def test_valid_xsrf_required(valuestorage):
     """
@@ -33,7 +36,7 @@ def test_valid_xsrf_required(valuestorage):
                       json=valuestorage.valid_item_object, cookies={'csrftoken': str(uuid4())})
     Response(r).assert_status_code(403)
 
-
+@severity(severity_level.CRITICAL)
 @pytest.mark.skip(reason="fetches entire table")
 def test_get_all():
     """
@@ -42,7 +45,7 @@ def test_get_all():
     r = requests.get(url=config.SERVICE_URL+'all')
     Response(r).assert_status_code(200).validate(Payload)
 
-
+@severity(severity_level.CRITICAL)
 def test_create_item(valuestorage):
     """
     Creates specific valid item on server and tests if server returns 200.\n
@@ -53,7 +56,7 @@ def test_create_item(valuestorage):
     valuestorage.valid_item_object['pk'] = r.json()  #tests there depends on each other
     Response(r).assert_status_code(200)
 
-
+@severity(severity_level.CRITICAL)
 def test_get_item(valuestorage):
     """
     Tests if created item id actually exists.Asserts that the item is of valid schema,\n
@@ -62,7 +65,7 @@ def test_get_item(valuestorage):
     r = requests.get(url=config.SERVICE_URL + 'get?item_id=' + valuestorage.valid_item_object['pk'])
     Response(r).assert_status_code(200).validate(Payload).validate_created_item(valuestorage)
 
-
+@severity(severity_level.CRITICAL)
 @pytest.mark.parametrize("key", [
     "title",
     "author",
@@ -78,7 +81,7 @@ def test_update_item(valuestorage, key, update_item):
                      json=valuestorage.valid_item_object, cookies=valuestorage.xsrf)
     Response(r).assert_status_code(200)
 
-
+@severity(severity_level.CRITICAL)
 def test_delete_item(valuestorage):
     """
     Deletes the item created in "create item" test. Checks if server returns 200
