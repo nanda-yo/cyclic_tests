@@ -6,8 +6,7 @@ to install and run:
 
 or
 
-    docker build -t tests
-    docker run tests
+    docker build -t tests . && docker run -it tests
 
 to extract allure resources
 
