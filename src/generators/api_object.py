@@ -36,22 +36,17 @@ class ApiObjectBuilder(BuilderBaseClass):
         return fake.text(max_nb_chars=300)
 
     @classmethod
+    def generate_params(cls):
+        return [{"var1": fake.isbn10(), "var2": fake.isbn10(), "var3": fake.pyfloat()}]
+
+    @classmethod
     def build(cls):
         pk = cls.generate_pk()
         sk = cls.generate_sk()
         title = cls.generate_title()
         author = cls.generate_author()
         description = cls.generate_description()
-        var1 = fake.isbn10()
-        var2 = fake.isbn10()
-        var3 = fake.pyfloat()
-        params = [
-     {
-       "var1": var1,
-       "var2": var2,
-       "var3": var3
-     }
-   ]
+        params = cls.generate_params()
 
         valid_item_object = {
           "pk": pk,
